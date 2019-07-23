@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:9.6
+#    ports:
+    #  - "5432:5432"
+    volumes:
+      - /home/extmas3p/Omkar/integrationtest/dockercompose/database:/docker-entrypoint-initdb.d
+  web:
+    build: ./app
+    command: 'java -jar /app/myapp.jar --spring.profiles.active=dev'
+    volumes:
+      - /home:/home
+    ports:
+      - "8091:8091"
+    depends_on:
+      - db
